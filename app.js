@@ -2,23 +2,24 @@ const express = require("express")
 const app = express()
 const port = 3500
 
-const database_url="mongodb://127.0.0.1:27017/wanderlust"
-const mongodb=require("mongoose")
+const database_url = "mongodb://127.0.0.1:27017/wanderlust"
+const mongodb = require("mongoose")
 async function main() {
-  await  mongodb.connect(database_url)
+    await mongodb.connect(database_url)
 }
-main().then((res)=>{
+main().then((res) => {
     console.log("database done")
 })
-.catch((err)=>{
-    console.log("database,its over bro")
-})
-const Listing=require("./model/place_listing")
+    .catch((err) => {
+        console.log("database,its over bro")
+    })
+const Listing = require("./model/place_listing")
 
 
 const methodOverride = require("method-override")
 const path = require("path")
 const console = require("console")
+const { type } = require("os")
 
 
 app.set("view engine", "ejs")
@@ -43,26 +44,49 @@ app.use(methodOverride("_method"))
 //     result.send(err)
 //  })
 // })
-
-app.get("/listings/:id",async (req,res)=>{
-    let {id}=req.params;
-    // console.log(typeof(id))
-    let result=await Listing.findById(id)
-    res.render("listings/show.ejs",{result})
-})
-
-app.get("/listings",async (req,res)=>{
-     Listing.find({}).then((result)=>{
-        res.render("listings/index.ejs",{result})
-        // res.send(result)
-    })
-     .catch((err)=>{
-        res.send("some error while fetching database",err)
-    })
-    })
-app.get("/listings/new",(req,res)=>{
+app.get("/listings/new", (req, res) => {
     res.render("listings/form.ejs")
+
 })
+app.post("/listings", async (req, res) => {
+    let listing = req.body;
+    // // console.log(listing)
+    const new_listing = new Listing(listing);
+    await new_listing.save();
+    res.redirect("/listings")
+})
+app.get("/listings/:id/edit", async (req, res) => {
+    let { id } = req.params;
+
+    let result = await Listing.findById(id)
+    res.render("listings/editform.ejs", { result })
+})
+app.patch("/listings/:id", async (req, res) => {
+    let listing = req.body;
+    console.log(listing)
+})
+
+
+//* shwoimg particullar
+app.get("/listings/:id", async (req, res) => {
+    let { id } = req.params;
+    console.log(id, typeof (id))
+    let result = await Listing.findById(id)
+    res.render("listings/show.ejs", { result })
+})
+
+
+
+//* showing all
+app.get("/listings", async (req, res) => {
+    Listing.find({}).then((result) => {
+        res.render("listings/index.ejs", { result })
+    })
+        .catch((err) => {
+            res.send("some error while fetching database", err)
+        })
+})
+
 app.listen(port, () => {
     console.log("server done")
 })
