@@ -13,8 +13,7 @@
         value="<%=result.title%>">
         <br><br><br>
         <label for="description">description</label>
-        <textarea id="description"name="description" placeholder="<%=result.description%>">
-            </textarea>
+        <textarea name="description"><%= result.description %></textarea>
             <br><br><br>
         <label for="image">image-url:</label>
         <input type="text" id="image"name="image" value="<%=result.image%>">
@@ -22,8 +21,11 @@
         <label for="price">price</label>
         <input type="number" id="price"name="price" value="<%=result.price%>">
         <br><br><br>
-        <label for="Loaction">Loaction</label>
-        <input type="text" id="Loaction"name="loaction" value="<%=result.location%>">
+        <label for="Location">Loaction</label>
+        <input type="text" id="Location"name="location" value="<%=result.location%>">
+        <br><br><br>
+        <label for="country">country</label>
+        <input type="text" id="country"name="country" value="<%=result.country%>">
         <br><br><br>
         <button>Edit</button>
     </form>

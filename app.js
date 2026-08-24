@@ -18,9 +18,6 @@ const Listing = require("./model/place_listing")
 
 const methodOverride = require("method-override")
 const path = require("path")
-const console = require("console")
-const { type } = require("os")
-
 
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "/views"))
@@ -57,20 +54,30 @@ app.post("/listings", async (req, res) => {
 })
 app.get("/listings/:id/edit", async (req, res) => {
     let { id } = req.params;
-
     let result = await Listing.findById(id)
     res.render("listings/editform.ejs", { result })
 })
+
+//$ update route
 app.patch("/listings/:id", async (req, res) => {
+    let { id } = req.params;
     let listing = req.body;
-    console.log(listing)
+    let result = await Listing.findByIdAndUpdate(id,{...listing});
+    res.redirect("/listings")
+})
+
+app.delete("/listings/:id",async (req,res)=>{
+    let { id } = req.params;
+    await Listing.findByIdAndDelete(id);
+     res.redirect("/listings");
+
 })
 
 
 //* shwoimg particullar
 app.get("/listings/:id", async (req, res) => {
     let { id } = req.params;
-    console.log(id, typeof (id))
+    // console.log(id, typeof (id))
     let result = await Listing.findById(id)
     res.render("listings/show.ejs", { result })
 })
