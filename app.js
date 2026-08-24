@@ -18,6 +18,7 @@ const Listing=require("./model/place_listing")
 
 const methodOverride = require("method-override")
 const path = require("path")
+const console = require("console")
 
 
 app.set("view engine", "ejs")
@@ -28,19 +29,39 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride("_method"))
 
-app.get("/test",async (req,result)=>{
- let new_listing=new Listing({
-    title:"My Home",
-    description:"by teh beach",
-    price:12000,
-    location:"WB",
-    county:"india"
- })
- new_listing.save().then((res)=>{
-    result.send("saved",res)
- }).catch((err)=>{
-    result.send(err)
- })
+// app.get("/test",async (req,result)=>{
+//  let new_listing=new Listing({
+//     title:"My Home",
+//     description:"by teh beach",
+//     price:12000,
+//     location:"WB",
+//     county:"india"
+//  })
+//  new_listing.save().then((res)=>{
+//     result.send("saved",res)
+//  }).catch((err)=>{
+//     result.send(err)
+//  })
+// })
+
+app.get("/listings/:id",async (req,res)=>{
+    let {id}=req.params;
+    // console.log(typeof(id))
+    let result=await Listing.findById(id)
+    res.render("listings/show.ejs",{result})
+})
+
+app.get("/listings",async (req,res)=>{
+     Listing.find({}).then((result)=>{
+        res.render("listings/index.ejs",{result})
+        // res.send(result)
+    })
+     .catch((err)=>{
+        res.send("some error while fetching database",err)
+    })
+    })
+app.get("/listings/new",(req,res)=>{
+    res.render("listings/form.ejs")
 })
 app.listen(port, () => {
     console.log("server done")
