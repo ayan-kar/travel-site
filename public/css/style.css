@@ -73,7 +73,18 @@ a{
 .form-h1{
     text-align: center;
 }
-.form-btn{
+.form-btn,.show-edit-btn {
     background-color: #fe424d !important;
     border: #fe424d !important;
+}
+.show-img{
+    height: 40vh;
+    object-fit: cover;
+
+}
+.show-h3{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size:40px;
+    text-align: center;
 }

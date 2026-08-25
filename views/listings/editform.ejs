@@ -1,33 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Your Listing</title>
-</head>
+<% layout("./layouts/boilerplate.ejs") %>
 <body>
-    <h1>Creating a New Listing</h1>
-    <form action="/listings/<%=result.id%>?_method=PATCH" method="post">
-        <label for="title">Title</label>
-        <input type="text" id="title"name="title"
-        value="<%=result.title%>">
-        <br><br><br>
-        <label for="description">description</label>
-        <textarea name="description"><%= result.description %></textarea>
+        <h1 class="form-h1">Edit the Listing</h1>
+        <form class="row g-3" action="/listings" method="post">
+            <div class="col-8 offset-2">
+                <label for="title" class="form-label">Title</label>
+                <input placeholder="Enter the Title" class="form-control" class="form-control" type="text" id="title" name="title" value="<%=result.title%>">
+            </div>
             <br><br><br>
-        <label for="image">image-url:</label>
-        <input type="text" id="image"name="image" value="<%=result.image%>">
-        <br><br><br>
-        <label for="price">price</label>
-        <input type="number" id="price"name="price" value="<%=result.price%>">
-        <br><br><br>
-        <label for="Location">Loaction</label>
-        <input type="text" id="Location"name="location" value="<%=result.location%>">
-        <br><br><br>
-        <label for="country">country</label>
-        <input type="text" id="country"name="country" value="<%=result.country%>">
-        <br><br><br>
-        <button>Edit</button>
-    </form>
-</body>
-</html>
+            <div class="col-8  offset-2">
+                <label for="description" class="form-label">description</label>
+                <textarea placeholder="Enter the description"class="form-control" id="description" name="description"><%= result.description %></textarea>
+            </div>
+            <br><br><br>
+            <div class="col-8  offset-2">
+                <label for="image" class="form-label">image-url:</label>
+                <input placeholder="Enter the Url of image" class="form-control" class="form-control" type="text" id="image" name="image"  value="<%=result.image%>">
+            </div>
+            <div class="col-8  offset-2">
+                <label for="price" class="form-label">price</label>
+                <input placeholder="Enter the price "class="form-control" class="form-control" type="number" id="price" name="price" value="<%=result.price%>">
+            </div>
+            <br><br><br>
+            <div class="col-4 offset-2">
+                <label for="Location" class="form-label">Loaction</label>
+                <input placeholder="Enter the country" class="form-control" class="form-control" type="text" id="Location" name="location" value="<%=result.location%>">
+            </div>
+            <div class="col-4 ">
+                <label for="country" class="form-label">country</label>
+                <input placeholder="Enter the Loaction" class="form-control" type="text" id="country" name="country" value="<%=result.country%>">
+            </div>
+            <div class="col-12 offset-2">
+                <button type="submit" class="btn btn-dark form-btn">Edit and Save</button>
+                <br><br>
+            </div>
+        </form>
+    </body>
