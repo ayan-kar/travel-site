@@ -2,6 +2,8 @@ const express = require("express")
 const app = express()
 const port = 3500
 
+const ejsMate=require("ejs-mate")
+app.engine("ejs",ejsMate)
 const database_url = "mongodb://127.0.0.1:27017/wanderlust"
 const mongodb = require("mongoose")
 async function main() {
@@ -22,7 +24,7 @@ const path = require("path")
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "/views"))
 
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride("_method"))
@@ -92,6 +94,9 @@ app.get("/listings", async (req, res) => {
         .catch((err) => {
             res.send("some error while fetching database", err)
         })
+})
+app.get("/",(req,res)=>{
+    res.send("i am root bro")
 })
 
 app.listen(port, () => {
